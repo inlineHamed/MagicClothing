@@ -36,7 +36,7 @@ class RotatedCOCOeval(COCOeval):
             box_tensor = torch.from_numpy(boxlist)
         elif type(boxlist) == list:
             if boxlist == []:
-                return torch.zeros((0, output_box_dim), dtype=torch.float32)
+                return torch.zeros((0, output_box_dim), dtype=torch.float16)
             else:
                 box_tensor = torch.FloatTensor(boxlist)
         else:

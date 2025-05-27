@@ -271,7 +271,7 @@ class OmsDiffusionInpaintPipeline(StableDiffusionInpaintPipeline):
         init_image = self.image_processor.preprocess(
             image, height=height, width=width, crops_coords=crops_coords, resize_mode=resize_mode
         )
-        init_image = init_image.to(dtype=torch.float32)
+        init_image = init_image.to(dtype=torch.float16)
 
         # 6. Prepare latent variables
         num_channels_latents = self.vae.config.latent_channels

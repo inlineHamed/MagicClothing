@@ -75,7 +75,7 @@ def mask_rcnn_loss(pred_mask_logits, instances, vis_period=0):
     else:
         # Here we allow gt_masks to be float as well (depend on the implementation of rasterize())
         gt_masks_bool = gt_masks > 0.5
-    gt_masks = gt_masks.to(dtype=torch.float32)
+    gt_masks = gt_masks.to(dtype=torch.float16)
 
     # Log the training accuracy (using gt classes and 0.5 threshold)
     mask_incorrect = (pred_mask_logits > 0.0) != gt_masks_bool

@@ -149,11 +149,11 @@ class Boxes:
             tensor (Tensor[float]): a Nx4 matrix.  Each row is (x1, y1, x2, y2).
         """
         device = tensor.device if isinstance(tensor, torch.Tensor) else torch.device("cpu")
-        tensor = torch.as_tensor(tensor, dtype=torch.float32, device=device)
+        tensor = torch.as_tensor(tensor, dtype=torch.float16, device=device)
         if tensor.numel() == 0:
             # Use reshape, so we don't end up creating a new tensor that does not depend on
             # the inputs (and consequently confuses jit)
-            tensor = tensor.reshape((0, 4)).to(dtype=torch.float32, device=device)
+            tensor = tensor.reshape((0, 4)).to(dtype=torch.float16, device=device)
         assert tensor.dim() == 2 and tensor.size(-1) == 4, tensor.size()
 
         self.tensor = tensor

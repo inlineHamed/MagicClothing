@@ -316,7 +316,7 @@ class EventStorage:
 
         # Create a histogram with PyTorch
         hist_counts = torch.histc(hist_tensor, bins=bins)
-        hist_edges = torch.linspace(start=ht_min, end=ht_max, steps=bins + 1, dtype=torch.float32)
+        hist_edges = torch.linspace(start=ht_min, end=ht_max, steps=bins + 1, dtype=torch.float16)
 
         # Parameter for the add_histogram_raw function of SummaryWriter
         hist_params = dict(

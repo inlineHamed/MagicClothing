@@ -23,7 +23,7 @@ def prepare_image(image, height, width):
             raise ValueError("Image should be in [-1, 1] range")
 
         # Image as float32
-        image = image.to(dtype=torch.float32)
+        image = image.to(dtype=torch.float16)
     else:
         # preprocess image
         if isinstance(image, (PIL.Image.Image, np.ndarray)):
@@ -37,7 +37,7 @@ def prepare_image(image, height, width):
             image = np.concatenate([i[None, :] for i in image], axis=0)
 
         image = image.transpose(0, 3, 1, 2)
-        image = torch.from_numpy(image).to(dtype=torch.float32) / 127.5 - 1.0
+        image = torch.from_numpy(image).to(dtype=torch.float16) / 127.5 - 1.0
 
     return image
 
@@ -51,7 +51,7 @@ def prepare_mask(image, height, width):
         if image.ndim == 3:
             assert image.shape[0] == 1, "Image outside a batch should be of shape (3, H, W)"
             image = image.unsqueeze(0)
-        image = image.to(dtype=torch.float32)
+        image = image.to(dtype=torch.float16)
     else:
         # preprocess image
         if isinstance(image, (PIL.Image.Image, np.ndarray)):
@@ -65,7 +65,7 @@ def prepare_mask(image, height, width):
             image = np.stack([i[..., None] for i in image], axis=0)
 
         image = image.transpose(0, 3, 1, 2)
-        image = torch.from_numpy(image).to(dtype=torch.float32) / 255.
+        image = torch.from_numpy(image).to(dtype=torch.float16) / 255.
         image[image > 0.5] = 1
         image[image <= 0.5] = 0
 

@@ -14,24 +14,24 @@ class TestImageList(unittest.TestCase):
                 return ImageList.from_tensors(tensors, 4).tensor
 
         func = torch.jit.trace(
-            TensorToImageList(), ([torch.ones((3, 10, 10), dtype=torch.float32)],)
+            TensorToImageList(), ([torch.ones((3, 10, 10), dtype=torch.float16)],)
         )
-        ret = func([torch.ones((3, 15, 20), dtype=torch.float32)])
+        ret = func([torch.ones((3, 15, 20), dtype=torch.float16)])
         self.assertEqual(list(ret.shape), [1, 3, 16, 20], str(ret.shape))
 
         func = torch.jit.trace(
             TensorToImageList(),
             (
                 [
-                    torch.ones((3, 16, 10), dtype=torch.float32),
-                    torch.ones((3, 13, 11), dtype=torch.float32),
+                    torch.ones((3, 16, 10), dtype=torch.float16),
+                    torch.ones((3, 13, 11), dtype=torch.float16),
                 ],
             ),
         )
         ret = func(
             [
-                torch.ones((3, 25, 20), dtype=torch.float32),
-                torch.ones((3, 10, 10), dtype=torch.float32),
+                torch.ones((3, 25, 20), dtype=torch.float16),
+                torch.ones((3, 10, 10), dtype=torch.float16),
             ]
         )
         # does not support calling with different #images

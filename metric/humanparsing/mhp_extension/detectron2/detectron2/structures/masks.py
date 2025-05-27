@@ -189,7 +189,7 @@ class BitMasks:
         batch_inds = torch.arange(len(boxes), device=device).to(dtype=boxes.dtype)[:, None]
         rois = torch.cat([batch_inds, boxes], dim=1)  # Nx5
 
-        bit_masks = self.tensor.to(dtype=torch.float32)
+        bit_masks = self.tensor.to(dtype=torch.float16)
         rois = rois.to(device=device)
         output = (
             ROIAlign((mask_size, mask_size), 1.0, 0, aligned=True)
@@ -283,12 +283,12 @@ class PolygonMasks:
         Returns:
             Boxes: tight bounding boxes around polygon masks.
         """
-        boxes = torch.zeros(len(self.polygons), 4, dtype=torch.float32)
+        boxes = torch.zeros(len(self.polygons), 4, dtype=torch.float16)
         for idx, polygons_per_instance in enumerate(self.polygons):
-            minxy = torch.as_tensor([float("inf"), float("inf")], dtype=torch.float32)
-            maxxy = torch.zeros(2, dtype=torch.float32)
+            minxy = torch.as_tensor([float("inf"), float("inf")], dtype=torch.float16)
+            maxxy = torch.zeros(2, dtype=torch.float16)
             for polygon in polygons_per_instance:
-                coords = torch.from_numpy(polygon).view(-1, 2).to(dtype=torch.float32)
+                coords = torch.from_numpy(polygon).view(-1, 2).to(dtype=torch.float16)
                 minxy = torch.min(minxy, torch.min(coords, dim=0).values)
                 maxxy = torch.max(maxxy, torch.max(coords, dim=0).values)
             boxes[idx, :2] = minxy

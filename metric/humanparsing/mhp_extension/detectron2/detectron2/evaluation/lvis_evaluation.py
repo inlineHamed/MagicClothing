@@ -283,13 +283,13 @@ def _evaluate_box_proposals(dataset_predictions, lvis_api, thresholds=None, area
         # append recorded iou coverage level
         gt_overlaps.append(_gt_overlaps)
     gt_overlaps = (
-        torch.cat(gt_overlaps, dim=0) if len(gt_overlaps) else torch.zeros(0, dtype=torch.float32)
+        torch.cat(gt_overlaps, dim=0) if len(gt_overlaps) else torch.zeros(0, dtype=torch.float16)
     )
     gt_overlaps, _ = torch.sort(gt_overlaps)
 
     if thresholds is None:
         step = 0.05
-        thresholds = torch.arange(0.5, 0.95 + 1e-5, step, dtype=torch.float32)
+        thresholds = torch.arange(0.5, 0.95 + 1e-5, step, dtype=torch.float16)
     recalls = torch.zeros_like(thresholds)
     # compute recall for each iou threshold
     for i, t in enumerate(thresholds):
