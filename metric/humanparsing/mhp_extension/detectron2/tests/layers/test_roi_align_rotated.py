@@ -30,7 +30,7 @@ class ROIAlignRotatedTest(unittest.TestCase):
     def test_forward_output_0_90_180_270(self):
         for i in range(4):
             # i = 0, 1, 2, 3 corresponding to 0, 90, 180, 270 degrees
-            img = torch.arange(25, dtype=torch.float16).reshape(5, 5)
+            img = torch.arange(25, dtype=torch.float32).reshape(5, 5)
             """
             0  1  2   3 4
             5  6  7   8 9
@@ -92,7 +92,7 @@ class ROIAlignRotatedTest(unittest.TestCase):
         input = img[None, None, :, :]
 
         rois = [0] + list(box)
-        rois = torch.tensor(rois, dtype=torch.float16)[None, :]
+        rois = torch.tensor(rois, dtype=torch.float32)[None, :]
         result_cpu = op.forward(input, rois)
         if torch.cuda.is_available():
             result_cuda = op.forward(input.cuda(), rois.cuda())

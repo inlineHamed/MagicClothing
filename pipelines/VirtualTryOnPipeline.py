@@ -306,7 +306,7 @@ class VirtualTryOnPipeline(StableDiffusionControlNetInpaintPipeline):
         init_image = self.image_processor.preprocess(
             image, height=height, width=width, crops_coords=crops_coords, resize_mode=resize_mode
         )
-        init_image = init_image.to(dtype=torch.float16)
+        init_image = init_image.to(dtype=torch.float32)
 
         mask = self.mask_processor.preprocess(
             mask_image, height=height, width=width, resize_mode=resize_mode, crops_coords=crops_coords
@@ -531,7 +531,7 @@ class VirtualTryOnPipeline(StableDiffusionControlNetInpaintPipeline):
     ):
         image = self.control_image_processor.preprocess(
             image, height=height, width=width, crops_coords=crops_coords, resize_mode=resize_mode
-        ).to(dtype=torch.float16)
+        ).to(dtype=torch.float32)
         image_batch_size = image.shape[0]
 
         if image_batch_size == 1:

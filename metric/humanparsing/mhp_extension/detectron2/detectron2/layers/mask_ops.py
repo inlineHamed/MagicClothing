@@ -46,8 +46,8 @@ def _do_paste_mask(masks, boxes, img_h, img_w, skip_empty=True):
 
     N = masks.shape[0]
 
-    img_y = torch.arange(y0_int, y1_int, device=device, dtype=torch.float16) + 0.5
-    img_x = torch.arange(x0_int, x1_int, device=device, dtype=torch.float16) + 0.5
+    img_y = torch.arange(y0_int, y1_int, device=device, dtype=torch.float32) + 0.5
+    img_x = torch.arange(x0_int, x1_int, device=device, dtype=torch.float32) + 0.5
     img_y = (img_y - y0) / (y1 - y0) * 2 - 1
     img_x = (img_x - x0) / (x1 - x0) * 2 - 1
     # img_x, img_y have shapes (N, w), (N, h)
@@ -56,7 +56,7 @@ def _do_paste_mask(masks, boxes, img_h, img_w, skip_empty=True):
     gy = img_y[:, :, None].expand(N, img_y.size(1), img_x.size(1))
     grid = torch.stack([gx, gy], dim=3)
 
-    img_masks = F.grid_sample(masks.to(dtype=torch.float16), grid, align_corners=False)
+    img_masks = F.grid_sample(masks.to(dtype=torch.float32), grid, align_corners=False)
 
     if skip_empty:
         return img_masks[:, 0], (slice(y0_int, y1_int), slice(x0_int, x1_int))

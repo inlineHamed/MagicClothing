@@ -18,15 +18,15 @@ args = parser.parse_args()
 
 device = "cpu"
 
-vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float16)
+vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float32)
 if args.enable_cloth_guidance:
     if args.use_independent_condition:
-        pipe = OmsIndependentDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16, safety_checker=None)
+        pipe = OmsIndependentDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32, safety_checker=None)
     else:
-        pipe = OmsDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16, safety_checker=None)
+        pipe = OmsDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32, safety_checker=None)
 
 else:
-    pipe = StableDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16, safety_checker=None)
+    pipe = StableDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32, safety_checker=None)
 pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
 full_net = ClothAdapter(pipe, args.model_path, device, args.enable_cloth_guidance, args.use_independent_condition)
 

@@ -126,7 +126,7 @@ class RepeatFactorTrainingSampler(Sampler):
             rep_factor = max({category_rep[cat_id] for cat_id in cat_ids})
             rep_factors.append(rep_factor)
 
-        return torch.tensor(rep_factors, dtype=torch.float16)
+        return torch.tensor(rep_factors, dtype=torch.float32)
 
     def _get_epoch_indices(self, generator):
         """

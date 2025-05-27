@@ -211,11 +211,11 @@ class RotatedBoxes(Boxes):
         (5, 3, 4, 2, 0) and (5, 3, 4, 2, 90).
         """
         device = tensor.device if isinstance(tensor, torch.Tensor) else torch.device("cpu")
-        tensor = torch.as_tensor(tensor, dtype=torch.float16, device=device)
+        tensor = torch.as_tensor(tensor, dtype=torch.float32, device=device)
         if tensor.numel() == 0:
             # Use reshape, so we don't end up creating a new tensor that does not depend on
             # the inputs (and consequently confuses jit)
-            tensor = tensor.reshape((0, 5)).to(dtype=torch.float16, device=device)
+            tensor = tensor.reshape((0, 5)).to(dtype=torch.float32, device=device)
         assert tensor.dim() == 2 and tensor.size(-1) == 5, tensor.size()
 
         self.tensor = tensor

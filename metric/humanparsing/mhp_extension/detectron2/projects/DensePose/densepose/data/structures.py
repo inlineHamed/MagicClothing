@@ -106,7 +106,7 @@ class DensePoseDataRelative(object):
         import pycocotools.mask as mask_utils
 
         poly_specs = annotation[DensePoseDataRelative.S_KEY]
-        segm = torch.zeros((DensePoseDataRelative.MASK_SIZE,) * 2, dtype=torch.float16)
+        segm = torch.zeros((DensePoseDataRelative.MASK_SIZE,) * 2, dtype=torch.float32)
         for i in range(DensePoseDataRelative.N_BODY_PARTS):
             poly_i = poly_specs[i]
             if poly_i:

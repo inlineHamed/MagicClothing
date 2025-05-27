@@ -29,7 +29,7 @@ class RPNTest(unittest.TestCase):
         image_shape = (15, 15)
         num_channels = 1024
         features = {"res4": torch.rand(num_images, num_channels, 1, 2)}
-        gt_boxes = torch.tensor([[1, 1, 3, 3], [2, 2, 6, 6]], dtype=torch.float16)
+        gt_boxes = torch.tensor([[1, 1, 3, 3], [2, 2, 6, 6]], dtype=torch.float32)
         gt_instances = Instances(image_shape)
         gt_instances.gt_boxes = Boxes(gt_boxes)
         with EventStorage():  # capture events in a new storage to discard them
@@ -96,7 +96,7 @@ class RPNTest(unittest.TestCase):
         image_shape = (15, 15)
         num_channels = 1024
         features = {"res4": torch.rand(num_images, num_channels, 1, 2)}
-        gt_boxes = torch.tensor([[2, 2, 2, 2, 0], [4, 4, 4, 4, 0]], dtype=torch.float16)
+        gt_boxes = torch.tensor([[2, 2, 2, 2, 0], [4, 4, 4, 4, 0]], dtype=torch.float32)
         gt_instances = Instances(image_shape)
         gt_instances.gt_boxes = RotatedBoxes(gt_boxes)
         with EventStorage():  # capture events in a new storage to discard them

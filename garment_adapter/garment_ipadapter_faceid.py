@@ -117,7 +117,7 @@ class ProjPlusModel(torch.nn.Module):
 
 
 class IPAdapterFaceID:
-    def __init__(self, sd_pipe, ref_path, ip_ckpt, device, enable_cloth_guidance, num_tokens=4, n_cond=1, torch_dtype=torch.float16, set_seg_model=True):
+    def __init__(self, sd_pipe, ref_path, ip_ckpt, device, enable_cloth_guidance, num_tokens=4, n_cond=1, torch_dtype=torch.float32, set_seg_model=True):
         self.enable_cloth_guidance = enable_cloth_guidance
         self.device = device
         self.ip_ckpt = ip_ckpt
@@ -262,7 +262,7 @@ class IPAdapterFaceID:
 
         cloth = prepare_image(cloth_image, height, width)
         cloth_mask = prepare_mask(cloth_mask_image, height, width)
-        cloth = (cloth * cloth_mask).to(self.device, dtype=torch.float16)
+        cloth = (cloth * cloth_mask).to(self.device, dtype=torch.float32)
 
         self.set_scale(scale)
 
@@ -320,7 +320,7 @@ class IPAdapterFaceID:
 
 
 class IPAdapterFaceIDPlus:
-    def __init__(self, sd_pipe, ref_path, image_encoder_path, ip_ckpt, device, enable_cloth_guidance, num_tokens=4, torch_dtype=torch.float16, set_seg_model=True):
+    def __init__(self, sd_pipe, ref_path, image_encoder_path, ip_ckpt, device, enable_cloth_guidance, num_tokens=4, torch_dtype=torch.float32, set_seg_model=True):
         self.enable_cloth_guidance = enable_cloth_guidance
         self.device = device
         self.image_encoder_path = image_encoder_path
@@ -472,7 +472,7 @@ class IPAdapterFaceIDPlus:
 
         cloth = prepare_image(cloth_image, height, width)
         cloth_mask = prepare_mask(cloth_mask_image, height, width)
-        cloth = (cloth * cloth_mask).to(self.device, dtype=torch.float16)
+        cloth = (cloth * cloth_mask).to(self.device, dtype=torch.float32)
         self.set_scale(scale)
 
         num_prompts = faceid_embeds.size(0)

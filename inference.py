@@ -28,11 +28,11 @@ if __name__ == "__main__":
 
     cloth_image = Image.open(args.cloth_path).convert("RGB")
 
-    vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float16)
+    vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float32)
     if args.enable_cloth_guidance:
-        pipe = OmsDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16)
+        pipe = OmsDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32)
     else:
-        pipe = StableDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16)
+        pipe = StableDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32)
     pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
 
     full_net = ClothAdapter(pipe, args.model_path, device, args.enable_cloth_guidance, False)

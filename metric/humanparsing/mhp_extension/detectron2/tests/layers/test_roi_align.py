@@ -104,8 +104,8 @@ class ROIAlignTest(unittest.TestCase):
             self.assertTrue(torch.allclose(input.grad, torch.zeros_like(input)))
 
     def test_empty_batch(self):
-        input = torch.zeros(0, 3, 10, 10, dtype=torch.float16)
-        rois = torch.zeros(0, 5, dtype=torch.float16)
+        input = torch.zeros(0, 3, 10, 10, dtype=torch.float32)
+        rois = torch.zeros(0, 5, dtype=torch.float32)
         op = ROIAlign((7, 7), 1.0, 0, aligned=True)
         output = op.forward(input, rois)
         self.assertTrue(output.shape == (0, 3, 7, 7))
@@ -128,7 +128,7 @@ def benchmark_roi_align():
             # try smaller boxes:
             # b = random_boxes([100, 100, 110, 110], 4, nboxes_per_img, H)
             boxes.append(b)
-            batch_idx.append(torch.zeros(nboxes_per_img, 1, dtype=torch.float16) + k)
+            batch_idx.append(torch.zeros(nboxes_per_img, 1, dtype=torch.float32) + k)
         boxes = torch.cat(boxes, axis=0)
         batch_idx = torch.cat(batch_idx, axis=0)
         boxes = torch.cat([batch_idx, boxes], axis=1)

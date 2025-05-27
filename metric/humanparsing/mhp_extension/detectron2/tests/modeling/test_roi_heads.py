@@ -31,11 +31,11 @@ class ROIHeadsTest(unittest.TestCase):
         features = {"res4": torch.rand(num_images, num_channels, 1, 2)}
 
         image_shape = (15, 15)
-        gt_boxes0 = torch.tensor([[1, 1, 3, 3], [2, 2, 6, 6]], dtype=torch.float16)
+        gt_boxes0 = torch.tensor([[1, 1, 3, 3], [2, 2, 6, 6]], dtype=torch.float32)
         gt_instance0 = Instances(image_shape)
         gt_instance0.gt_boxes = Boxes(gt_boxes0)
         gt_instance0.gt_classes = torch.tensor([2, 1])
-        gt_boxes1 = torch.tensor([[1, 5, 2, 8], [7, 3, 10, 5]], dtype=torch.float16)
+        gt_boxes1 = torch.tensor([[1, 5, 2, 8], [7, 3, 10, 5]], dtype=torch.float32)
         gt_instance1 = Instances(image_shape)
         gt_instance1.gt_boxes = Boxes(gt_boxes1)
         gt_instance1.gt_classes = torch.tensor([1, 2])
@@ -76,11 +76,11 @@ class ROIHeadsTest(unittest.TestCase):
         features = {"res4": torch.rand(num_images, num_channels, 1, 2)}
 
         image_shape = (15, 15)
-        gt_boxes0 = torch.tensor([[2, 2, 2, 2, 30], [4, 4, 4, 4, 0]], dtype=torch.float16)
+        gt_boxes0 = torch.tensor([[2, 2, 2, 2, 30], [4, 4, 4, 4, 0]], dtype=torch.float32)
         gt_instance0 = Instances(image_shape)
         gt_instance0.gt_boxes = RotatedBoxes(gt_boxes0)
         gt_instance0.gt_classes = torch.tensor([2, 1])
-        gt_boxes1 = torch.tensor([[1.5, 5.5, 1, 3, 0], [8.5, 4, 3, 2, -50]], dtype=torch.float16)
+        gt_boxes1 = torch.tensor([[1.5, 5.5, 1, 3, 0], [8.5, 4, 3, 2, -50]], dtype=torch.float32)
         gt_instance1 = Instances(image_shape)
         gt_instance1.gt_boxes = RotatedBoxes(gt_boxes1)
         gt_instance1.gt_classes = torch.tensor([1, 2])

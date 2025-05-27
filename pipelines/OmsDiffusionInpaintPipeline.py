@@ -147,7 +147,7 @@ class OmsDiffusionInpaintPipeline(StableDiffusionInpaintPipeline):
         >>> mask_image = download_image(mask_url).resize((512, 512))
 
         >>> pipe = StableDiffusionInpaintPipeline.from_pretrained(
-        ...     "runwayml/stable-diffusion-inpainting", torch_dtype=torch.float16
+        ...     "runwayml/stable-diffusion-inpainting", torch_dtype=torch.float32
         ... )
         >>> pipe = pipe.to("cpu")
 
@@ -271,7 +271,7 @@ class OmsDiffusionInpaintPipeline(StableDiffusionInpaintPipeline):
         init_image = self.image_processor.preprocess(
             image, height=height, width=width, crops_coords=crops_coords, resize_mode=resize_mode
         )
-        init_image = init_image.to(dtype=torch.float16)
+        init_image = init_image.to(dtype=torch.float32)
 
         # 6. Prepare latent variables
         num_channels_latents = self.vae.config.latent_channels

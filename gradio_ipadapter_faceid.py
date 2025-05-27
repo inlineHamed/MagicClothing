@@ -20,11 +20,11 @@ args = parser.parse_args()
 
 device = "cpu"
 
-vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float16)
+vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float32)
 if args.enable_cloth_guidance:
-    pipe = OmsDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16)
+    pipe = OmsDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32)
 else:
-    pipe = StableDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float16)
+    pipe = StableDiffusionPipeline.from_pretrained(args.pipe_path, vae=vae, torch_dtype=torch.float32)
 pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
 
 if args.faceid_version == "FaceID":

@@ -83,7 +83,7 @@ class TestBoxMode(unittest.TestCase):
             self.assertTrue(np.allclose(output, expected, atol=1e-6), "output={}".format(output))
 
     def test_box_convert_xywha_to_xyxy_tensor(self):
-        for dtype in [torch.float32, torch.float64]:
+        for dtype in [torch.float32, torch.float32, torch.float64]:
             box = torch.tensor(
                 [
                     [50, 50, 30, 20, 0],

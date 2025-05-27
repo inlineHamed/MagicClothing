@@ -228,10 +228,10 @@ class TensorMaskAnchorGenerator(DefaultAnchorGenerator):
             grid_height, grid_width = size
             device = base_anchors.device
             shifts_x = torch.arange(
-                0, grid_width * stride, step=stride, dtype=torch.float16, device=device
+                0, grid_width * stride, step=stride, dtype=torch.float32, device=device
             )
             shifts_y = torch.arange(
-                0, grid_height * stride, step=stride, dtype=torch.float16, device=device
+                0, grid_height * stride, step=stride, dtype=torch.float32, device=device
             )
             shift_y, shift_x = torch.meshgrid(shifts_y, shifts_x)
             shifts = torch.stack((shift_x, shift_y, shift_x, shift_y), dim=2)
@@ -239,7 +239,7 @@ class TensorMaskAnchorGenerator(DefaultAnchorGenerator):
             cur_anchor = (shifts[:, :, None, :] + base_anchors.view(1, 1, -1, 4)).view(-1, 4)
             anchors.append(cur_anchor)
             unit_lengths.append(
-                torch.full((cur_anchor.shape[0],), stride, dtype=torch.float16, device=device)
+                torch.full((cur_anchor.shape[0],), stride, dtype=torch.float32, device=device)
             )
             # create mask indexes using mesh grid
             shifts_l = torch.full((1,), lvl, dtype=torch.int64, device=device)
@@ -311,7 +311,7 @@ class TensorMask(nn.Module):
         self.mask_on                  = cfg.MODEL.MASK_ON
         self.mask_loss_weight         = cfg.MODEL.TENSOR_MASK.MASK_LOSS_WEIGHT
         self.mask_pos_weight          = torch.tensor(cfg.MODEL.TENSOR_MASK.POSITIVE_WEIGHT,
-                                                     dtype=torch.float16)
+                                                     dtype=torch.float32)
         self.bipyramid_on             = cfg.MODEL.TENSOR_MASK.BIPYRAMID_ON
         # fmt: on
 
@@ -429,7 +429,7 @@ class TensorMask(nn.Module):
         gt_classes_target, gt_valid_inds = gt_class_info
         gt_deltas, gt_fg_inds = gt_delta_info
         gt_masks, gt_mask_inds = gt_mask_info
-        loss_normalizer = torch.tensor(max(1, num_fg), dtype=torch.float16, device=self.device)
+        loss_normalizer = torch.tensor(max(1, num_fg), dtype=torch.float32, device=self.device)
 
         # classification and regression
         pred_logits, pred_deltas = permute_all_cls_and_box_to_N_HWA_K_and_concat(
@@ -469,7 +469,7 @@ class TensorMask(nn.Module):
                         # TODO maybe there are numerical issues when mask sizes are large
                         cur_size_divider = torch.tensor(
                             self.mask_loss_weight / (cur_mask_size ** 2),
-                            dtype=torch.float16,
+                            dtype=torch.float32,
                             device=self.device,
                         )
 
@@ -482,7 +482,7 @@ class TensorMask(nn.Module):
 
                         loss_mask += F.binary_cross_entropy_with_logits(
                             cur_pred_masks.view(-1, cur_mask_size, cur_mask_size),  # V, U
-                            gt_masks[lvl][anc].to(dtype=torch.float16),
+                            gt_masks[lvl][anc].to(dtype=torch.float32),
                             reduction="sum",
                             weight=cur_size_divider,
                             pos_weight=self.mask_pos_weight,
@@ -606,7 +606,7 @@ class TensorMask(nn.Module):
         gt_valid_inds = gt_classes >= 0
         gt_fg_inds = gt_valid_inds & (gt_classes < self.num_classes)
         gt_classes_target = torch.zeros(
-            (gt_classes.shape[0], self.num_classes), dtype=torch.float16, device=self.device
+            (gt_classes.shape[0], self.num_classes), dtype=torch.float32, device=self.device
         )
         gt_classes_target[gt_fg_inds, gt_classes[gt_fg_inds]] = 1
         gt_deltas = cat(gt_deltas) if gt_deltas else None
