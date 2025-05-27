@@ -26,7 +26,7 @@ if __name__ == "__main__":
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    cloth_image = Image.open(args.cloth_path).convert("RGB").resize((11, 11))
+    cloth_image = Image.open(args.cloth_path).convert("RGB").resize((384, 384))
 
     vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float32)
     if args.enable_cloth_guidance:
