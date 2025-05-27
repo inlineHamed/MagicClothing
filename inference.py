@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    device = "cuda"
+    device = "cpu"
     output_path = args.output_path
     if not os.path.exists(output_path):
         os.makedirs(output_path)

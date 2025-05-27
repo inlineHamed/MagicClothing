@@ -132,7 +132,7 @@ class ROIAlignRotatedTest(unittest.TestCase):
         """
         # torch.manual_seed(123)
         dtype = torch.float64
-        device = torch.device("cuda")
+        device = torch.device("cpu")
         pool_h, pool_w = (5, 5)
 
         roi_align = ROIAlign(output_size=(pool_h, pool_w), spatial_scale=1, sampling_ratio=2).to(

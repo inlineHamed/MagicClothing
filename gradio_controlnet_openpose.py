@@ -14,7 +14,7 @@ parser.add_argument('--pipe_path', type=str, default="SG161222/Realistic_Vision_
 
 args = parser.parse_args()
 
-device = "cuda"
+device = "cpu"
 
 openpose_model = OpenposeDetector.from_pretrained("lllyasviel/ControlNet").to(device)
 control_net_openpose = ControlNetModel.from_pretrained("lllyasviel/control_v11p_sd15_openpose", torch_dtype=torch.float16)

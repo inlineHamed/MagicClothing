@@ -62,7 +62,7 @@ class MyUNet2DConditionModel(UNet2DConditionModel):
             # This would be a good case for the `match` statement (Python 3.10+)
             is_mps = sample.device.type == "mps"
             if isinstance(timestep, float):
-                dtype = torch.float16 if is_mps else torch.float64
+                dtype = torch.float32 if is_mps else torch.float64
             else:
                 dtype = torch.int32 if is_mps else torch.int64
             timesteps = torch.tensor([timesteps], dtype=dtype, device=sample.device)
@@ -194,7 +194,7 @@ class SDFeaturizer:
         onestep_pipe.vae.decoder = None
         onestep_pipe.scheduler = DDIMScheduler.from_pretrained(sd_id, subfolder="scheduler")
         gc.collect()
-        onestep_pipe = onestep_pipe.to("cuda")
+        onestep_pipe = onestep_pipe.to("cpu")
         onestep_pipe.enable_attention_slicing()
         onestep_pipe.enable_xformers_memory_efficient_attention()
         null_prompt_embeds = onestep_pipe._encode_prompt(

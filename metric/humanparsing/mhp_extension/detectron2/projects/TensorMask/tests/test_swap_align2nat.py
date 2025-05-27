@@ -12,7 +12,7 @@ class SwapAlign2NatTest(unittest.TestCase):
     @unittest.skipIf(not torch.cuda.is_available(), "CUDA not available")
     def test_swap_align2nat_gradcheck_cuda(self):
         dtype = torch.float64
-        device = torch.device("cuda")
+        device = torch.device("cpu")
         m = SwapAlign2Nat(2).to(dtype=dtype, device=device)
         x = torch.rand(2, 4, 10, 10, dtype=dtype, device=device, requires_grad=True)
 

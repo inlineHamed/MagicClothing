@@ -180,7 +180,7 @@ def benchmark_paste():
 
     specs = [{"device": torch.device("cpu"), "n": 3}]
     if torch.cuda.is_available():
-        specs.append({"device": torch.device("cuda"), "n": 3})
+        specs.append({"device": torch.device("cpu"), "n": 3})
 
     benchmark(func, "paste_masks", specs, num_iters=10, warmup_iters=2)
 

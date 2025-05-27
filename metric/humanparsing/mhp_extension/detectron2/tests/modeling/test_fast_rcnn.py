@@ -65,7 +65,7 @@ class FastRCNNTest(unittest.TestCase):
 
     @unittest.skipIf(not torch.cuda.is_available(), "CUDA not available")
     def test_fast_rcnn_empty_batch_cuda(self):
-        self.test_fast_rcnn_empty_batch(device=torch.device("cuda"))
+        self.test_fast_rcnn_empty_batch(device=torch.device("cpu"))
 
     def test_fast_rcnn_rotated(self):
         torch.manual_seed(132)

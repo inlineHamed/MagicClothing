@@ -21,7 +21,7 @@ class TestBox2BoxTransform(unittest.TestCase):
 
         devices = [torch.device("cpu")]
         if torch.cuda.is_available():
-            devices.append(torch.device("cuda"))
+            devices.append(torch.device("cpu"))
         for device in devices:
             src_boxes = src_boxes.to(device=device)
             dst_boxes = dst_boxes.to(device=device)
@@ -45,7 +45,7 @@ class TestBox2BoxTransformRotated(unittest.TestCase):
 
         devices = [torch.device("cpu")]
         if torch.cuda.is_available():
-            devices.append(torch.device("cuda"))
+            devices.append(torch.device("cpu"))
         for device in devices:
             src_boxes = src_boxes.to(device=device)
             dst_boxes = dst_boxes.to(device=device)

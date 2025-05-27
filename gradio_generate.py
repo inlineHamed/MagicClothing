@@ -16,7 +16,7 @@ parser.add_argument('--pipe_path', type=str, default="SG161222/Realistic_Vision_
 
 args = parser.parse_args()
 
-device = "cuda"
+device = "cpu"
 
 vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float16)
 if args.enable_cloth_guidance:

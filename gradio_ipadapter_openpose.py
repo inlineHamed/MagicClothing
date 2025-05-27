@@ -18,7 +18,7 @@ parser.add_argument('--faceid_version', type=str, default="FaceIDPlus", choices=
 
 args = parser.parse_args()
 
-device = "cuda"
+device = "cpu"
 
 openpose_model = OpenposeDetector.from_pretrained("lllyasviel/ControlNet").to(device)
 control_net_openpose = ControlNetModel.from_pretrained("lllyasviel/control_v11p_sd15_openpose", torch_dtype=torch.float16)
