@@ -16,7 +16,7 @@ if __name__ == "__main__":
     parser.add_argument('--cloth_path', type=str, required=True)
     parser.add_argument('--model_path', type=str, required=True)
     parser.add_argument('--enable_cloth_guidance', action="store_true")
-    parser.add_argument('--pipe_path', type=str, default="SG161222/Realistic_Vision_V4.0_noVAE")
+    parser.add_argument('--pipe_path', type=str, default="runwayml/stable-diffusion-v1-5")
     parser.add_argument('--output_path', type=str, default="./output_img")
 
     args = parser.parse_args()
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    cloth_image = Image.open(args.cloth_path).convert("RGB")
+    cloth_image = Image.open(args.cloth_path).convert("RGB").resize((512, 512))
 
     vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse").to(dtype=torch.float32)
     if args.enable_cloth_guidance:
